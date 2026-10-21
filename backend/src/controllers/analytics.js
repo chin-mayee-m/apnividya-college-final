@@ -1,4 +1,5 @@
-const db = require('../config/db');
+ROUND(AVG(a.percentage)::numeric, 1) AS percentage
+ const db = require('../config/db');
 const a = require('../utils/analytics');
 
 async function examAnalytics(req, res, next) {

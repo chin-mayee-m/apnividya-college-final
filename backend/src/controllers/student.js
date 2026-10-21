@@ -16,7 +16,7 @@ async function list(req, res, next) {
 
     const rows = (await db.query(
       `SELECT DISTINCT u.id, u.name, u.roll_no, u.email,
-              (SELECT ROUND(AVG(at.percentage),1) FROM attempts at
+              (SELECT ROUND(AVG(at.percentage)::numeric,1) FROM attempts at
                 WHERE at.student_id = u.id AND at.status IN ('submitted','evaluated')) AS average_pct,
               (SELECT COUNT(*) FROM attempts at
                 WHERE at.student_id = u.id AND at.status IN ('submitted','evaluated')) AS exams_taken
@@ -47,7 +47,7 @@ async function myPerformance(req, res, next) {
     const topics = await a.topicPerformance({ studentId: req.user.id });
 
     const overall = (await db.query(
-      `SELECT student_id, ROUND(AVG(percentage),1) AS avg_pct FROM attempts
+      `SELECT student_id, ROUND(AVG(percentage)::numeric, 1) AS avg_pct FROM attempts
         WHERE status IN ('submitted','evaluated') GROUP BY student_id
         ORDER BY avg_pct DESC`
     )).rows;
