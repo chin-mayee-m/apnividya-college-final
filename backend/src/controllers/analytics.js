@@ -30,7 +30,7 @@ async function leaderboard(req, res, next) {
 
     const rows = (await db.query(
       `SELECT u.id AS student_id, u.name, u.roll_no,
-              ROUND(AVG(a.percentage), 1) AS percentage,
+              ROUND(AVG(a.percentage)::numeric, 1) AS percentage,
               SUM(a.score) AS score, SUM(a.max_marks) AS max_marks,
               COUNT(*) AS exams_taken
          FROM attempts a JOIN users u ON u.id = a.student_id
