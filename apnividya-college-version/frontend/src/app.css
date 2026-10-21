@@ -1,0 +1,129 @@
+  /* ---- Additions for the connected app: auth, exam player, grading ---- */
+
+  .auth-wrap{ padding:26px 24px; display:flex; flex-direction:column; height:100%;}
+  .auth-mark{ font-family:'Fraunces'; font-weight:600; font-size:26px; letter-spacing:-.01em;}
+  .auth-tag{ font-size:11.5px; color:var(--ink-soft); margin-top:4px; font-weight:500; line-height:1.5;}
+  .auth-seg{ display:flex; gap:6px; background:var(--paper-card); border:1px solid var(--rule); border-radius:12px; padding:4px; margin:22px 0 18px;}
+  .auth-seg button{ flex:1; border:none; background:none; font-family:'Inter'; font-weight:700; font-size:11.5px; padding:9px 4px; border-radius:9px; color:var(--ink-soft); cursor:pointer;}
+  .auth-seg button.on{ background:var(--ink); color:var(--paper);}
+  .auth-hint{ font-size:10.5px; color:var(--ink-faint); line-height:1.6; margin-top:14px; font-weight:500;}
+  .auth-hint b{ color:var(--ink-soft); font-weight:700;}
+  .auth-err{ background:var(--coral-light); color:var(--coral); font-size:11.5px; font-weight:600; padding:10px 12px; border-radius:10px; margin-bottom:14px; line-height:1.45;}
+
+  .loading{ padding:40px 20px; text-align:center; color:var(--ink-faint); font-size:12px; font-weight:600;}
+  .empty{ padding:28px 18px; text-align:center; color:var(--ink-faint); font-size:12px; line-height:1.6;}
+  .empty b{ display:block; font-family:'Fraunces'; font-weight:600; font-size:14.5px; color:var(--ink); margin-bottom:6px;}
+
+  /* Exam code — meant to be read aloud, so it is set large and tracked out. */
+  .code-box{ background:var(--ink); color:var(--paper); border-radius:16px; padding:18px; text-align:center;}
+  .code-box .lbl{ font-size:10px; letter-spacing:.14em; text-transform:uppercase; color:#E7A79E; font-weight:700;}
+  .code-box .val{ font-family:'Fraunces'; font-weight:700; font-size:30px; letter-spacing:.16em; margin:8px 0 4px;}
+  .code-box .sub{ font-size:10.5px; color:#B9C1D0; font-weight:600;}
+  .code-input{ width:100%; text-align:center; font-family:'Fraunces'; font-weight:700; font-size:24px; letter-spacing:.16em; text-transform:uppercase; padding:14px; border:1.5px solid var(--rule); border-radius:14px; background:var(--paper-card); outline:none; color:var(--ink);}
+  .code-input:focus{ border-color:var(--teal);}
+
+  /* Exam player ---------------------------------------------------------- */
+  .exam-bar{ display:flex; align-items:center; justify-content:space-between; padding:10px 16px; background:var(--paper-card); border-bottom:1px solid var(--rule); flex-shrink:0;}
+  .exam-bar .qcount{ font-family:'Fraunces'; font-weight:600; font-size:14px;}
+  .exam-bar .qsub{ font-size:10px; color:var(--ink-soft); font-weight:600; margin-top:1px;}
+  .timer{ display:flex; align-items:center; gap:6px; font-family:'Fraunces'; font-weight:700; font-size:16px; padding:6px 12px; border-radius:10px; background:var(--teal-light); color:var(--teal); font-variant-numeric:tabular-nums;}
+  .timer.warn{ background:var(--amber-light); color:var(--amber);}
+  /* Under two minutes the timer pulses — the one moment in the app where
+     motion is warranted, because it is the only irreversible deadline. */
+  .timer.danger{ background:var(--coral-light); color:var(--coral); animation:pulse 1s ease-in-out infinite;}
+  @keyframes pulse{ 0%,100%{opacity:1;} 50%{opacity:.55;} }
+  @media (prefers-reduced-motion: reduce){ .timer.danger{ animation:none;} }
+
+  .qbody{ padding:16px 20px 8px;}
+  .qtext{ font-size:13.5px; font-weight:600; line-height:1.55; margin-bottom:4px;}
+  .qmeta{ font-size:10.5px; color:var(--ink-faint); font-weight:700; margin-bottom:14px;}
+  .qmeta .neg{ color:var(--coral);}
+  .exam-nav{ display:flex; gap:8px; padding:10px 16px 12px; background:var(--paper-card); border-top:1px solid var(--rule); flex-shrink:0;}
+  .exam-nav .btn{ flex:1; justify-content:center;}
+  .review-btn{ width:100%; border:1.5px dashed var(--rule); background:none; border-radius:11px; padding:11px; font-family:'Inter'; font-weight:700; font-size:11.5px; color:var(--ink-soft); cursor:pointer; margin-top:4px;}
+  .review-btn.on{ border-style:solid; border-color:var(--amber); background:var(--amber-light); color:var(--amber);}
+
+  /* Question navigator: a grid the student can open over the paper, so 50
+     questions stay reachable without leaving the current question. */
+  .palette-sheet{ position:absolute; inset:0; background:rgba(30,42,58,.35); z-index:40; display:flex; align-items:flex-end;}
+  .palette-panel{ width:100%; background:var(--paper-card); border-radius:20px 20px 0 0; padding:16px 18px 20px; max-height:78%; overflow-y:auto;}
+  .palette-panel::-webkit-scrollbar{ width:0;}
+  .palette-grid{ display:grid; grid-template-columns:repeat(6,1fr); gap:8px; margin:12px 0 16px;}
+  .pcell{ aspect-ratio:1; border-radius:9px; border:1.5px solid var(--rule); background:var(--paper-card); font-family:'Fraunces'; font-weight:700; font-size:12px; color:var(--ink-soft); cursor:pointer; display:flex; align-items:center; justify-content:center;}
+  .pcell.answered{ background:var(--teal); border-color:var(--teal); color:#fff;}
+  .pcell.review{ background:var(--amber); border-color:var(--amber); color:#fff;}
+  .pcell.current{ outline:2px solid var(--ink); outline-offset:1.5px;}
+  .plegend{ display:flex; flex-wrap:wrap; gap:12px; font-size:10px; font-weight:700; color:var(--ink-soft);}
+  .plegend i{ width:10px; height:10px; border-radius:3px; display:inline-block; margin-right:5px; vertical-align:-1px;}
+  .progress-strip{ display:flex; gap:3px; padding:0 16px 10px; background:var(--paper-card); flex-shrink:0;}
+  .progress-strip i{ flex:1; height:3px; border-radius:2px; background:var(--rule);}
+  .progress-strip i.done{ background:var(--teal);}
+  .progress-strip i.rev{ background:var(--amber);}
+
+  .num-input{ width:100%; font-family:'Fraunces'; font-weight:600; font-size:18px; padding:13px; border:1.5px solid var(--rule); border-radius:12px; background:var(--paper-card); outline:none; color:var(--ink);}
+  .num-input:focus{ border-color:var(--teal);}
+
+  /* Grading ------------------------------------------------------------- */
+  .grade-card{ padding:15px 16px; margin-bottom:12px;}
+  .grade-who{ display:flex; align-items:center; gap:10px; margin-bottom:10px;}
+  .grade-who .nm{ font-weight:700; font-size:12.5px;}
+  .grade-who .rl{ font-size:10px; color:var(--ink-faint); font-weight:600;}
+  .grade-q{ font-size:11.5px; font-weight:700; line-height:1.5; margin-bottom:8px;}
+  .grade-ans{ background:var(--paper); border:1px solid var(--rule); border-radius:10px; padding:11px 12px; font-size:11.5px; line-height:1.6; color:var(--ink); margin-bottom:10px; white-space:pre-wrap;}
+  .grade-model{ font-size:10.5px; color:var(--ink-soft); line-height:1.5; margin-bottom:10px; padding-left:9px; border-left:2px solid var(--rule);}
+  .mark-row{ display:flex; align-items:center; gap:8px;}
+  .mark-row input{ width:64px; text-align:center; font-family:'Fraunces'; font-weight:700; font-size:14px; padding:9px; border:1.5px solid var(--rule); border-radius:10px; background:var(--paper-card); outline:none; color:var(--ink);}
+  .mark-row input:focus{ border-color:var(--teal);}
+  .mark-row .of{ font-size:11px; color:var(--ink-soft); font-weight:700;}
+
+  /* Bank picker --------------------------------------------------------- */
+  .bank-item{ display:flex; align-items:flex-start; gap:10px; padding:11px 0; border-bottom:1px solid var(--rule); cursor:pointer;}
+  .bank-item:last-child{ border-bottom:none;}
+  .bank-check{ width:19px; height:19px; border-radius:6px; border:1.5px solid var(--rule); flex-shrink:0; margin-top:1px; display:flex; align-items:center; justify-content:center; font-size:11px; color:#fff;}
+  .bank-check.on{ background:var(--teal); border-color:var(--teal);}
+  .bank-text{ flex:1; font-size:11.5px; font-weight:600; line-height:1.45;}
+  .bank-meta{ font-size:9.5px; color:var(--ink-faint); font-weight:700; margin-top:4px; text-transform:uppercase; letter-spacing:.04em;}
+  .seg{ display:flex; gap:6px; margin-bottom:12px;}
+  .seg button{ flex:1; border:1px solid var(--rule); background:var(--paper-card); border-radius:9px; padding:8px 4px; font-family:'Inter'; font-weight:700; font-size:10.5px; color:var(--ink-soft); cursor:pointer;}
+  .seg button.on{ background:var(--ink); color:var(--paper); border-color:var(--ink);}
+  .reorder{ display:flex; flex-direction:column; gap:2px; margin-left:6px;}
+  .reorder button{ border:none; background:none; cursor:pointer; color:var(--ink-faint); font-size:9px; line-height:1; padding:2px;}
+  .reorder button:hover{ color:var(--ink);}
+  .mini-input{ width:48px; text-align:center; font-family:'Fraunces'; font-weight:700; font-size:12px; padding:5px; border:1px solid var(--rule); border-radius:7px; background:var(--paper-card); outline:none; color:var(--ink);}
+
+  .plan-row{ display:flex; gap:10px; align-items:flex-start; padding:11px 0; border-bottom:1px solid var(--rule);}
+  .plan-row:last-child{ border-bottom:none;}
+  .plan-row .sig{ font-size:13px; line-height:1.3;}
+  .plan-row .pt{ font-size:12px; font-weight:700;}
+  .plan-row .pd{ font-size:10.5px; color:var(--ink-soft); margin-top:3px; line-height:1.5;}
+  .step-item{ display:flex; gap:11px; padding:12px 0; border-bottom:1px solid var(--rule);}
+  .step-item:last-child{ border-bottom:none;}
+  .step-num{ width:21px; height:21px; border-radius:50%; background:var(--teal-light); color:var(--teal); font-family:'Fraunces'; font-weight:700; font-size:10.5px; display:flex; align-items:center; justify-content:center; flex-shrink:0;}
+  .step-item .sa{ font-size:12px; font-weight:700;}
+  .step-item .sd{ font-size:10.5px; color:var(--ink-soft); margin-top:3px; line-height:1.5;}
+
+  .banner{ font-size:11px; font-weight:600; line-height:1.5; padding:11px 13px; border-radius:11px; margin-bottom:14px;}
+  .banner.warn{ background:var(--amber-light); color:#8a5c02;}
+  .banner.info{ background:var(--teal-light); color:var(--teal);}
+  .delta{ font-size:10.5px; font-weight:700;}
+  .delta.up{ color:var(--teal);} .delta.down{ color:var(--coral);} .delta.flat{ color:var(--ink-faint);}
+
+  .btn:focus-visible, .nav-item:focus-visible, .pcell:focus-visible, .option-btn:focus-visible{ outline:2px solid var(--ink); outline-offset:2px;}
+
+  /* Proctoring ---------------------------------------------------------- */
+  .proctor-sheet{ position:absolute; inset:0; background:rgba(30,42,58,.55); z-index:60;
+    display:flex; align-items:center; justify-content:center; padding:26px;}
+  .proctor-card{ background:var(--paper-card); border-radius:18px; padding:22px 20px; text-align:center;
+    border:1.5px solid var(--coral);}
+  .proctor-card .ico{ font-size:28px; margin-bottom:8px;}
+  .proctor-card h4{ font-family:'Fraunces'; font-weight:600; font-size:16px; margin-bottom:8px; color:var(--coral);}
+  .proctor-card p{ font-size:11.5px; line-height:1.6; color:var(--ink-soft); margin-bottom:6px;}
+  .proctor-card .strikes{ font-family:'Fraunces'; font-weight:700; font-size:13px; color:var(--ink); margin:10px 0 14px;}
+  .proctor-chip{ display:inline-flex; align-items:center; gap:5px; font-size:9.5px; font-weight:800;
+    letter-spacing:.05em; text-transform:uppercase; padding:4px 8px; border-radius:6px;
+    background:var(--coral-light); color:var(--coral);}
+  .proctor-chip.safe{ background:var(--teal-light); color:var(--teal);}
+  .vio-row{ display:flex; align-items:center; gap:10px; padding:10px 0; border-bottom:1px solid var(--rule);}
+  .vio-row:last-child{ border-bottom:none;}
+  .vio-count{ font-family:'Fraunces'; font-weight:700; font-size:13px; color:var(--coral); min-width:24px;}
+  .vio-ev{ font-size:10px; color:var(--ink-faint); font-weight:600; margin-top:3px; line-height:1.5;}
